@@ -1,51 +1,48 @@
-public class Cajera implements Runnable {
-    private String nombre;
+public class Cajera {
 
-    // Constructor, getter y setter
+	private String nombre;
 
-    private Cliente cliente;
-    private long timeStamp;
+	public Cajera(String nombre){
+		this.nombre=nombre;
 
-    public Cajera(String nombre) {
-        this.nombre = nombre;
-    }
+	}
 
-    public void asignarCliente(Cliente cliente, long timeStamp) {
-        this.cliente = cliente;
-        this.timeStamp = timeStamp;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    @Override
-    public void run() {
-        procesarCompra();
-    }
-
-    private void procesarCompra() {
-
-        System.out.println("La cajera " + this.nombre +
-                " COMIENZA A PROCESAR LA COMPRA DEL CLIENTE " + cliente.getNombre() +
-                " EN EL TIEMPO: " + (System.currentTimeMillis() - timeStamp) / 1000	+
-                "seg");
-
-        for (int i = 0; i < cliente.getCarroCompra().length; i++) {
-            this.esperarXsegundos(cliente.getCarroCompra()[i]);
-            System.out.println("Procesado el producto " + (i + 1) +
-                    " ->Tiempo: " + (System.currentTimeMillis() - timeStamp) / 1000 +
-                    "seg");
-        }
-
-        System.out.println("La cajera " + this.nombre + " HA TERMINADO DE PROCESAR " +
-                cliente.getNombre() + " EN EL TIEMPO: " +
-                (System.currentTimeMillis() - timeStamp) / 1000 + "seg");
-
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 
-    private void esperarXsegundos(int segundos) {
-        try {
-            Thread.sleep(segundos * 1000);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-    }
+	public void procesarCompra(Cliente cliente, long tiempo){
+
+		System.out.println("La cajera "+this.nombre+" comienza a procesar la compra del cliente "+
+				cliente.getNombre()+" en el tiempo: "+ (System.currentTimeMillis()-tiempo)/1000+ " seg.");
+
+		for (int i = 0; i < cliente.getCarroCompra().length; i++) {
+
+			this.esperarXsegundos(cliente.getCarroCompra()[i]);
+			System.out.println("Procesando el producto "+(i+1)+". Tiempo: " +
+					(System.currentTimeMillis()-tiempo)/1000+ " seg.");
+		}
+		System.out.println("La cajera "+this.nombre+" ha terminado de procesar la compra del cliente "+
+				cliente.getNombre()+" en el tiempo: "+ (System.currentTimeMillis()-tiempo)/1000+ " seg.");
+
+			if(cliente.getNombre().equals("Jaime")){
+				System.out.println("La cajera se ha enamorado del cliente y la han despedido");
+			}
+		}
+	
+		private void esperarXsegundos(int segundos) {
+			try {
+				Thread.sleep(segundos * 1000);
+			} catch (InterruptedException ex) {
+				Thread.currentThread().interrupt();
+			}
+		}
+
+	public void asignarCliente(Cliente cliente1, long initialTime) {
+	}
 }
